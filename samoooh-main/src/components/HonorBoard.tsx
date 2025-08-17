@@ -49,13 +49,12 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
 
       grades.forEach(grade => {
         const gradeStudents = students
-          .filter(student => student.grade === grade && (student.scores?.length || 0) > 0)
+          .filter(student => student.grade === grade)
           .map(student => ({
             ...student,
             average: calcAveragePercent(student) as any
           }) as any)
-          .sort((a: any, b: any) => b.average - a.average)
-          .slice(0, 3);
+          .sort((a: any, b: any) => b.average - a.average);
         
         if (gradeStudents.length > 0) {
           gradeGroups[grade] = gradeStudents as any;
@@ -170,11 +169,11 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
                           </div>
                           
                           <div className="text-2xl font-bold text-yellow-400 mb-1 animate-pulse">
-                            {(calcAveragePercent(student)).toFixed(1)}%
+                            {Number.isFinite(calcAveragePercent(student)) ? (calcAveragePercent(student)).toFixed(1) : '0.0'}%
                           </div>
                           <p className="text-gray-300 text-base font-semibold">المتوسط العام</p>
                           <div className="mt-2 text-sm text-gray-400">
-                            {student.scores.length} اختبارات
+                            {(student.scores?.length || 0)} اختبارات
                           </div>
                         </div>
                         
