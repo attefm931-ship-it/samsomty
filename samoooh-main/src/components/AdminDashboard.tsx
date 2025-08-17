@@ -24,22 +24,25 @@ export const AdminDashboard: React.FC = () => {
   const [addingScore, setAddingScore] = useState<string | null>(null);
   const [newScoreData, setNewScoreData] = useState({ examName: '', score: '', maxScore: '' });
   const [pending, setPending] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'pending' | 'students'>('pending');
+  const [activeTab, setActiveTab] = useState<'pending' | 'students'>('students');
   const [approvingId, setApprovingId] = useState<string | null>(null);
   const [rejectingId, setRejectingId] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubStudents = subscribeToStudents(setStudents);
     const unsubPending = subscribeToPendingStudents((list) => {
-      // normalize list to ensure objects contain needed fields
-      setPending((list || []).map((p: any) => ({
+      const normalized = (list || []).map((p: any) => ({
         id: p.id,
         name: p.name || '',
         grade: p.grade || '',
         email: p.email || '',
         code: p.code || '',
         createdAt: p.createdAt || new Date()
-      })));
+      }));
+      setPending(normalized);
+      normalized.forEach((p: any) => {
+        approvePendingStudentInFirebase(p.id).catch(() => {});
+      });
     });
     return () => {
       unsubStudents && unsubStudents();
@@ -206,14 +209,7 @@ export const AdminDashboard: React.FC = () => {
                     <div className="font-bold text-white">{p.name}</div>
                     <div className="text-gray-300">{p.grade} • {p.email} • كود: <span className="font-mono">{p.code}</span></div>
                   </div>
-                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <button onClick={() => handleApprovePending(p)} className="px-3 py-2 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 hover:bg-green-500/30 transition-colors text-sm flex items-center disabled:opacity-50" disabled={approvingId===p.id}>
-                      <Check className="w-4 h-4 ml-1" /> {approvingId===p.id ? 'جارٍ القبول...' : 'صح'}
-                    </button>
-                    <button onClick={() => handleRejectPending(p)} className="px-3 py-2 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 hover:bg-red-500/30 transition-colors text-sm flex items-center disabled:opacity-50" disabled={rejectingId===p.id}>
-                      <Close className="w-4 h-4 ml-1" /> {rejectingId===p.id ? 'جارٍ الرفض...' : 'غلط'}
-                    </button>
-                  </div>
+                  <div className="text-green-400 text-sm">يتم قبول الطلبات تلقائياً</div>
                 </div>
               ))}
             </div>

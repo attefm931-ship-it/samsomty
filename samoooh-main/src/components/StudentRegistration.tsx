@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, Copy, Check } from 'lucide-react';
 import { GlowingButton } from './GlowingButton';
-import { addPendingStudentToFirebase } from '../utils/firebaseUtils';
 import { Grade } from '../types';
 
 interface StudentRegistrationProps {
@@ -52,7 +51,6 @@ export const StudentRegistration: React.FC<StudentRegistrationProps> = ({ onBack
 
     try {
       const student = {
-        id: Date.now().toString(),
         name: formData.name,
         email: formData.email,
         password: formData.password,
@@ -64,7 +62,8 @@ export const StudentRegistration: React.FC<StudentRegistrationProps> = ({ onBack
         canComment: false,
         createdAt: new Date()
       } as any;
-      await addPendingStudentToFirebase(student);
+      const { addStudentToFirebase } = await import('../utils/firebaseUtils');
+      await addStudentToFirebase(student);
       setStudentCode(code);
     } catch (e: any) {
       setErrorMsg(e?.message || 'حدث خطأ أثناء إنشاء الحساب');
