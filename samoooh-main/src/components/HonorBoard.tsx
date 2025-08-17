@@ -55,10 +55,7 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
             average: calcAveragePercent(student) as any
           }) as any)
           .sort((a: any, b: any) => b.average - a.average);
-        
-        if (gradeStudents.length > 0) {
-          gradeGroups[grade] = gradeStudents as any;
-        }
+        gradeGroups[grade] = gradeStudents as any;
       });
 
       setTopStudents(gradeGroups);
@@ -113,7 +110,7 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg overflow-y-hidden overscroll-none">
-      <div className="premium-card p-4 md:p-6 max-w-5xl w-full mx-4 relative enhanced-glow max-h-[96vh]">
+      <div className="premium-card p-4 md:p-6 max-w-5xl w-full mx-4 relative enhanced-glow max-h-[calc(100dvh-32px)] flex flex-col">
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 z-10" aria-label="إغلاق">
           <X className="w-6 h-6" />
         </button>
@@ -138,7 +135,7 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
           <p className="text-gray-300 text-lg">أفضل الطلاب في كل مرحلة</p>
         </div>
 
-        <div className="overflow-y-auto pr-2 overscroll-contain max-h-[calc(100vh-160px)]">
+        <div className="flex-1 overflow-y-auto pr-2 overscroll-contain">
           {Object.keys(topStudents).length === 0 ? (
             <div className="text-center py-16 fade-in-up">
               <Trophy className="w-20 h-20 text-gray-400 mx-auto mb-6 opacity-50" />
@@ -146,44 +143,52 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
             </div>
           ) : (
             <div className="space-y-8">
-              {Object.entries(topStudents).map(([grade, students]) => (
-                <div key={grade} className="premium-card p-5 fade-in-up">
-                  <h3 className="text-2xl font-bold text-white mb-6 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">{grade}</h3>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    {students.map((student, index) => (
-                      <div
-                        key={student.id}
-                        className={`p-5 rounded-2xl ${getRankStyle(index)} transition-all duration-500 relative overflow-hidden`}
-                      >
-                        <div className="absolute top-3 left-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-xs">
-                          {index + 1}
-                        </div>
-                        
-                        <div className="text-center relative">
-                          <div className="mb-6">
-                            {getRankIcon(index)}
+              {grades.map((grade) => {
+                const students = (topStudents as any)[grade] || [];
+                const topThree = students.slice(0, 3);
+                return (
+                  <div key={grade} className="premium-card p-5 fade-in-up">
+                    <h3 className="text-2xl font-bold text-white mb-6 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">{grade}</h3>
+                    {topThree.length === 0 ? (
+                      <div className="text-center text-gray-400 py-6">لا يوجد طلاب في هذه المرحلة</div>
+                    ) : (
+                      <div className="grid md:grid-cols-3 gap-4">
+                        {topThree.map((student: any, index: number) => (
+                          <div
+                            key={student.id}
+                            className={`p-5 rounded-2xl ${getRankStyle(index)} transition-all duration-500 relative overflow-hidden`}
+                          >
+                            <div className="absolute top-3 left-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-xs">
+                              {index + 1}
+                            </div>
+                            
+                            <div className="text-center relative">
+                              <div className="mb-6">
+                                {getRankIcon(index)}
+                              </div>
+                              
+                              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 mb-3 border border-white/20">
+                                <h4 className="text-lg font-bold text-white">{(student as any).name}</h4>
+                              </div>
+                              
+                              <div className="text-2xl font-bold text-yellow-400 mb-1 animate-pulse">
+                                {Number.isFinite(calcAveragePercent(student)) ? (calcAveragePercent(student)).toFixed(1) : '0.0'}%
+                              </div>
+                              <p className="text-gray-300 text-base font-semibold">المتوسط العام</p>
+                              <div className="mt-2 text-sm text-gray-400">
+                                {(student.scores?.length || 0)} اختبارات
+                              </div>
+                            </div>
+                            
+                            <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/10 to-transparent rounded-bl-full"></div>
+                            <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-white/10 to-transparent rounded-tr-full"></div>
                           </div>
-                          
-                          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 mb-3 border border-white/20">
-                            <h4 className="text-lg font-bold text-white">{(student as any).name}</h4>
-                          </div>
-                          
-                          <div className="text-2xl font-bold text-yellow-400 mb-1 animate-pulse">
-                            {Number.isFinite(calcAveragePercent(student)) ? (calcAveragePercent(student)).toFixed(1) : '0.0'}%
-                          </div>
-                          <p className="text-gray-300 text-base font-semibold">المتوسط العام</p>
-                          <div className="mt-2 text-sm text-gray-400">
-                            {(student.scores?.length || 0)} اختبارات
-                          </div>
-                        </div>
-                        
-                        <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/10 to-transparent rounded-bl-full"></div>
-                        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-white/10 to-transparent rounded-tr-full"></div>
+                        ))}
                       </div>
-                    ))}
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
