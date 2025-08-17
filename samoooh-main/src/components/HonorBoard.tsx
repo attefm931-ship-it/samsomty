@@ -100,8 +100,8 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-lg overflow-y-auto">
-      <div className="premium-card p-6 md:p-10 max-w-7xl w-full mx-auto my-8 md:my-12 relative enhanced-glow">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg">
+      <div className="premium-card p-6 md:p-10 max-w-7xl w-full mx-4 relative enhanced-glow max-h-[90vh] overflow-hidden">
         <button
           onClick={onClose}
           className="absolute top-6 right-6 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 z-10"
@@ -129,53 +129,55 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
           <p className="text-gray-300 text-xl">أفضل الطلاب في كل مرحلة</p>
         </div>
 
-        {Object.keys(topStudents).length === 0 ? (
-          <div className="text-center py-16 fade-in-up">
-            <Trophy className="w-20 h-20 text-gray-400 mx-auto mb-6 opacity-50" />
-            <p className="text-gray-400 text-xl">لا توجد درجات مسجلة بعد</p>
-          </div>
-        ) : (
-          <div className="space-y-12">
-            {Object.entries(topStudents).map(([grade, students]) => (
-              <div key={grade} className="premium-card p-8 fade-in-up">
-                <h3 className="text-3xl font-bold text-white mb-8 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">{grade}</h3>
-                <div className="grid md:grid-cols-3 gap-8">
-                  {students.map((student, index) => (
-                    <div
-                      key={student.id}
-                      className={`p-8 rounded-2xl ${getRankStyle(index)} transition-all duration-500 hover:scale-110 relative overflow-hidden`}
-                    >
-                      <div className="absolute top-4 left-4 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white font-bold">
-                        {index + 1}
-                      </div>
-                      
-                      <div className="text-center relative">
-                        <div className="mb-6">
-                          {getRankIcon(index)}
+        <div className="overflow-y-auto max-h-[70vh] pr-2">
+          {Object.keys(topStudents).length === 0 ? (
+            <div className="text-center py-16 fade-in-up">
+              <Trophy className="w-20 h-20 text-gray-400 mx-auto mb-6 opacity-50" />
+              <p className="text-gray-400 text-xl">لا توجد درجات مسجلة بعد</p>
+            </div>
+          ) : (
+            <div className="space-y-12">
+              {Object.entries(topStudents).map(([grade, students]) => (
+                <div key={grade} className="premium-card p-8 fade-in-up">
+                  <h3 className="text-3xl font-bold text-white mb-8 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">{grade}</h3>
+                  <div className="grid md:grid-cols-3 gap-8">
+                    {students.map((student, index) => (
+                      <div
+                        key={student.id}
+                        className={`p-8 rounded-2xl ${getRankStyle(index)} transition-all duration-500 hover:scale-110 relative overflow-hidden`}
+                      >
+                        <div className="absolute top-4 left-4 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white font-bold">
+                          {index + 1}
                         </div>
                         
-                        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-4 border border-white/20">
-                          <h4 className="text-xl font-bold text-white">{(student as any).name}</h4>
+                        <div className="text-center relative">
+                          <div className="mb-6">
+                            {getRankIcon(index)}
+                          </div>
+                          
+                          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-4 border border:white/20">
+                            <h4 className="text-xl font-bold text-white">{(student as any).name}</h4>
+                          </div>
+                          
+                          <div className="text-3xl font-bold text-yellow-400 mb-2 animate-pulse">
+                            {(calcAveragePercent(student)).toFixed(1)}%
+                          </div>
+                          <p className="text-gray-300 text-lg font-semibold">المتوسط العام</p>
+                          <div className="mt-4 text-sm text-gray-400">
+                            {student.scores.length} اختبارات
+                          </div>
                         </div>
                         
-                        <div className="text-3xl font-bold text-yellow-400 mb-2 animate-pulse">
-                          {(calcAveragePercent(student)).toFixed(1)}%
-                        </div>
-                        <p className="text-gray-300 text-lg font-semibold">المتوسط العام</p>
-                        <div className="mt-4 text-sm text-gray-400">
-                          {student.scores.length} اختبارات
-                        </div>
+                        <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/10 to-transparent rounded-bl-full"></div>
+                        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from:white/10 to-transparent rounded-tr-full"></div>
                       </div>
-                      
-                      <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/10 to-transparent rounded-bl-full"></div>
-                      <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-white/10 to-transparent rounded-tr-full"></div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
