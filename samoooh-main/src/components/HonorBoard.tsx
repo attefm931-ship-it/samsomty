@@ -23,6 +23,19 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
+  // Lock body scroll when modal is open to avoid background scrolling
+  useEffect(() => {
+    if (!isOpen) return;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const originalBodyOverflow = document.body.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.style.overflow = originalBodyOverflow;
+    };
+  }, [isOpen]);
+
   const calcAveragePercent = (student: Student): number => {
     if (!student.scores || student.scores.length === 0) return 0;
     const total = student.scores.reduce((acc, s) => acc + (s.score / (s.maxScore || 100)) * 100, 0);
@@ -100,7 +113,7 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg overflow-y-auto overscroll-none">
       <div className="premium-card p-6 md:p-10 max-w-7xl w-full mx-4 relative enhanced-glow max-h-[90vh]">
         <button
           onClick={onClose}
@@ -129,7 +142,7 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
           <p className="text-gray-300 text-xl">أفضل الطلاب في كل مرحلة</p>
         </div>
 
-        <div className="overflow-y-auto max-h-[70vh] pr-2">
+        <div className="overflow-y-auto max-h-[70vh] pr-2 overscroll-contain">
           {Object.keys(topStudents).length === 0 ? (
             <div className="text-center py-16 fade-in-up">
               <Trophy className="w-20 h-20 text-gray-400 mx-auto mb-6 opacity-50" />
