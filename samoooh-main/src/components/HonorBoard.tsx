@@ -113,12 +113,9 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg overflow-y-auto overscroll-none">
-      <div className="premium-card p-4 md:p-6 max-w-5xl w-full mx-4 relative enhanced-glow max-h-[85vh]">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 z-10"
-        >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg overflow-y-hidden overscroll-none">
+      <div className="premium-card p-4 md:p-6 max-w-5xl w-full mx-4 relative enhanced-glow max-h-[96vh]">
+        <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 z-10" aria-label="إغلاق">
           <X className="w-6 h-6" />
         </button>
 
@@ -142,7 +139,7 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
           <p className="text-gray-300 text-lg">أفضل الطلاب في كل مرحلة</p>
         </div>
 
-        <div className="overflow-y-auto max-h-[65vh] pr-2 overscroll-contain">
+        <div className="overflow-y-auto pr-2 overscroll-contain max-h-[calc(100vh-160px)]">
           {Object.keys(topStudents).length === 0 ? (
             <div className="text-center py-16 fade-in-up">
               <Trophy className="w-20 h-20 text-gray-400 mx-auto mb-6 opacity-50" />
