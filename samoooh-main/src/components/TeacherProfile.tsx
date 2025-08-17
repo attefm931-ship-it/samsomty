@@ -12,6 +12,9 @@ export const TeacherProfile: React.FC = () => {
               src="/images/200751736_4075686949145707_5525433579295463923_n.jpg"
               alt="المدرس سامح عبد الخالق الفايدي"
               className="w-full h-full object-cover relative z-10"
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';

@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar } from './components/Navbar';
 import { TeacherProfile } from './components/TeacherProfile';
 import { AnimatedBackground } from './components/AnimatedBackground';
+import { Footer } from './components/Footer';
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <main className="pt-20">
           <TeacherProfile />
         </main>
+
+        <Footer />
 
         <a
           href="https://wa.me/201069616550"
