@@ -100,8 +100,8 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg">
-      <div className="premium-card p-6 md:p-10 max-w-7xl w-full mx-4 relative enhanced-glow max-h-[90vh] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg overflow-y-auto">
+      <div className="premium-card p-6 md:p-10 max-w-7xl w-full mx-4 relative enhanced-glow max-h-[90vh]">
         <button
           onClick={onClose}
           className="absolute top-6 right-6 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 z-10"
@@ -144,7 +144,7 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
                     {students.map((student, index) => (
                       <div
                         key={student.id}
-                        className={`p-8 rounded-2xl ${getRankStyle(index)} transition-all duration-500 hover:scale-110 relative overflow-hidden`}
+                        className={`p-8 rounded-2xl ${getRankStyle(index)} transition-all duration-500 relative overflow-hidden`}
                       >
                         <div className="absolute top-4 left-4 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white font-bold">
                           {index + 1}
@@ -155,7 +155,7 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
                             {getRankIcon(index)}
                           </div>
                           
-                          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-4 border border:white/20">
+                          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-4 border border-white/20">
                             <h4 className="text-xl font-bold text-white">{(student as any).name}</h4>
                           </div>
                           
@@ -169,7 +169,7 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
                         </div>
                         
                         <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/10 to-transparent rounded-bl-full"></div>
-                        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from:white/10 to-transparent rounded-tr-full"></div>
+                        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-white/10 to-transparent rounded-tr-full"></div>
                       </div>
                     ))}
                   </div>
