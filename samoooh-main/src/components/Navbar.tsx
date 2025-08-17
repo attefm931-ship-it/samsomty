@@ -58,7 +58,7 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* Mobile menu button */}
-            <button onClick={() => setMobileOpen(o => !o)} className="md:hidden text-white/90 focus:outline-none">
+            <button onClick={() => setMobileOpen(o => !o)} className="md:hidden text-white/90 focus:outline:none">
               {mobileOpen ? <Close className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
           </div>
@@ -83,6 +83,9 @@ export const Navbar: React.FC = () => {
           </div>
         )}
       </nav>
+
+      {/* Hide animated background while heavy modals are open */}
+      <style>{`.animated-bg{display:${showHonorBoard || showAboutUs || showQuestions || showAdminModal ? 'none' : 'block'};}`}</style>
 
       <Suspense fallback={null}>
         {showLoginModal && <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />}

@@ -4,7 +4,7 @@ const ARABIC_LETTERS = ['ا','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','
 
 export const AnimatedBackground: React.FC = () => {
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none animated-bg">
       {[...Array(30)].map((_, i) => {
         const left = Math.random() * 100;
         const top = Math.random() * 100;
