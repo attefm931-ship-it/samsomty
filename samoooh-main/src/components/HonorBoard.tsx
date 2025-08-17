@@ -100,8 +100,8 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg">
-      <div className="premium-card p-10 max-w-7xl w-full mx-4 relative max-h-[90vh] overflow-y-auto enhanced-glow">
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-lg overflow-y-auto">
+      <div className="premium-card p-6 md:p-10 max-w-7xl w-full mx-auto my-8 md:my-12 relative enhanced-glow">
         <button
           onClick={onClose}
           className="absolute top-6 right-6 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 z-10"
