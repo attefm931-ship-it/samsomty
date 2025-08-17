@@ -5,24 +5,24 @@ const ARABIC_LETTERS = ['ا','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','
 export const AnimatedBackground: React.FC = () => {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      {[...Array(60)].map((_, i) => {
+      {[...Array(30)].map((_, i) => {
         const left = Math.random() * 100;
         const top = Math.random() * 100;
-        const delay = Math.random() * 5;
-        const size = 12 + Math.random() * 18;
+        const delay = Math.random() * 6;
+        const size = 10 + Math.random() * 14;
         const letter = ARABIC_LETTERS[i % ARABIC_LETTERS.length];
-        const driftX = (Math.random() * 8 - 4).toFixed(2);
-        const driftY = (Math.random() * 8 - 4).toFixed(2);
+        const driftX = (Math.random() * 6 - 3).toFixed(2);
+        const driftY = (Math.random() * 6 - 3).toFixed(2);
         return (
           <span
             key={i}
-            className="absolute text-sky-300/30 select-none"
+            className="absolute text-sky-300/25 select-none"
             style={{
               left: `${left}%`,
               top: `${top}%`,
               fontSize: `${size}px`,
-              textShadow: '0 0 12px rgba(56,189,248,0.35)',
-              animation: `letterPulse 6s ease-in-out ${delay}s infinite, drift${i} 12s ease-in-out ${delay}s infinite alternate`
+              textShadow: '0 0 8px rgba(56,189,248,0.25)',
+              animation: `letterPulse 7s ease-in-out ${delay}s infinite, drift${i} 14s ease-in-out ${delay}s infinite alternate`
             }}
           >
             {letter}
@@ -32,8 +32,8 @@ export const AnimatedBackground: React.FC = () => {
       })}
 
       <div className="absolute inset-0" style={{
-        background: 'radial-gradient(circle at 20% 30%, rgba(59,130,246,0.08), transparent 40%), radial-gradient(circle at 80% 70%, rgba(2,132,199,0.08), transparent 45%)',
-        animation: 'pulse 8s ease-in-out infinite'
+        background: 'radial-gradient(circle at 20% 30%, rgba(59,130,246,0.06), transparent 40%), radial-gradient(circle at 80% 70%, rgba(2,132,199,0.06), transparent 45%)',
+        animation: 'pulse 10s ease-in-out infinite'
       }} />
     </div>
   );

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { GlowingButton } from './GlowingButton';
-import { LoginModal } from './LoginModal';
-import { AdminModal } from './AdminModal';
-import { HonorBoard } from './HonorBoard';
-import { AboutUs } from './AboutUs';
-import { QuestionsSection } from './QuestionsSection';
+// Lazy-loaded modals
+const LoginModal = lazy(() => import('./LoginModal').then(m => ({ default: m.LoginModal })));
+const AdminModal = lazy(() => import('./AdminModal').then(m => ({ default: m.AdminModal })));
+const HonorBoard = lazy(() => import('./HonorBoard').then(m => ({ default: m.HonorBoard })));
+const AboutUs = lazy(() => import('./AboutUs').then(m => ({ default: m.AboutUs })));
+const QuestionsSection = lazy(() => import('./QuestionsSection').then(m => ({ default: m.QuestionsSection })));
 import { BookOpen, Moon, Sun, Menu, X as Close } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -46,7 +47,7 @@ export const Navbar: React.FC = () => {
             
             {/* Desktop actions */}
             <div className="hidden md:flex items-center space-x-2 rtl:space-x-reverse">
-              <button onClick={toggleTheme} className="mr-2 text-white/80 hover:text-white transition-colors">
+              <button onClick={toggleTheme} className="mr-2 text-white/80 hover:text:white transition-colors">
                 {dark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
               <GlowingButton onClick={() => setShowHonorBoard(true)} variant="primary">لوحة الشرف</GlowingButton>
@@ -83,11 +84,13 @@ export const Navbar: React.FC = () => {
         )}
       </nav>
 
-      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
-      <AdminModal isOpen={showAdminModal} onClose={() => setShowAdminModal(false)} />
-      <HonorBoard isOpen={showHonorBoard} onClose={() => setShowHonorBoard(false)} />
-      <AboutUs isOpen={showAboutUs} onClose={() => setShowAboutUs(false)} />
-      <QuestionsSection isOpen={showQuestions} onClose={() => setShowQuestions(false)} />
+      <Suspense fallback={null}>
+        {showLoginModal && <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />}
+        {showAdminModal && <AdminModal isOpen={showAdminModal} onClose={() => setShowAdminModal(false)} />}
+        {showHonorBoard && <HonorBoard isOpen={showHonorBoard} onClose={() => setShowHonorBoard(false)} />}
+        {showAboutUs && <AboutUs isOpen={showAboutUs} onClose={() => setShowAboutUs(false)} />}
+        {showQuestions && <QuestionsSection isOpen={showQuestions} onClose={() => setShowQuestions(false)} />}
+      </Suspense>
     </>
   );
 };

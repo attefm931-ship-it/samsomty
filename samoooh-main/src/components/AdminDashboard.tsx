@@ -24,26 +24,13 @@ export const AdminDashboard: React.FC = () => {
   const [addingScore, setAddingScore] = useState<string | null>(null);
   const [newScoreData, setNewScoreData] = useState({ examName: '', score: '', maxScore: '' });
   const [pending, setPending] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'pending' | 'students'>('students');
+  const [activeTab, setActiveTab] = useState<'students'>('students');
   const [approvingId, setApprovingId] = useState<string | null>(null);
   const [rejectingId, setRejectingId] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubStudents = subscribeToStudents(setStudents);
-    const unsubPending = subscribeToPendingStudents((list) => {
-      const normalized = (list || []).map((p: any) => ({
-        id: p.id,
-        name: p.name || '',
-        grade: p.grade || '',
-        email: p.email || '',
-        code: p.code || '',
-        createdAt: p.createdAt || new Date()
-      }));
-      setPending(normalized);
-      normalized.forEach((p: any) => {
-        approvePendingStudentInFirebase(p.id).catch(() => {});
-      });
-    });
+    const unsubPending = () => {};
     return () => {
       unsubStudents && unsubStudents();
       unsubPending && unsubPending();
@@ -177,48 +164,10 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="mb-6 flex items-center space-x-2 rtl:space-x-reverse">
-        <button
-          onClick={() => setActiveTab('pending')}
-          className={`px-4 py-2 rounded-lg text-sm ${activeTab==='pending' ? 'bg-blue-500/20 border border-blue-500/50 text-blue-300' : 'bg-white/10 border border-white/20 text-white/80'} transition-colors flex items-center`}
-        >
-          <UserPlus className="w-4 h-4 ml-1" /> طلبات التسجيل
-        </button>
-        <button
-          onClick={() => setActiveTab('students')}
-          className={`px-4 py-2 rounded-lg text-sm ${activeTab==='students' ? 'bg-blue-500/20 border border-blue-500/50 text-blue-300' : 'bg-white/10 border border-white/20 text-white/80'} transition-colors flex items-center`}
-        >
-          <Settings className="w-4 h-4 ml-1" /> إدارة الطلاب
-        </button>
-      </div>
-
-      {/* Pending registrations tab */}
-      {activeTab === 'pending' && (
-        <div>
-          {pending.length === 0 ? (
-            <div className="text-center py-12">
-              <UserPlus className="w-16 h-16 text-gray-400 mx-auto mb-4 opacity-50" />
-              <p className="text-gray-400 text-lg">لا توجد طلبات تسجيل جديدة</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {pending.map((p, idx) => (
-                <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20 flex items-center justify-between">
-                  <div className="text-sm text-gray-200">
-                    <div className="font-bold text-white">{p.name}</div>
-                    <div className="text-gray-300">{p.grade} • {p.email} • كود: <span className="font-mono">{p.code}</span></div>
-                  </div>
-                  <div className="text-green-400 text-sm">يتم قبول الطلبات تلقائياً</div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+      {/* Tabs removed: show students management only */}
 
       {/* Students management tab */}
-      {activeTab === 'students' && (
+      {true && (
         <div>
           {students.length > 0 && (
             <div className="mb-6">
