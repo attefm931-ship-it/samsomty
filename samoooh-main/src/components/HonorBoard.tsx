@@ -76,22 +76,22 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
         return (
           <div className="trophy-container">
             <div className="trophy-glow gold-glow"></div>
-            <Trophy className="w-12 h-12 text-yellow-400 relative z-10" />
-            <Crown className="w-6 h-6 text-yellow-300 absolute -top-2 left-1/2 transform -translate-x-1/2" />
+            <Trophy className="w-10 h-10 text-yellow-400 relative z-10" />
+            <Crown className="w-5 h-5 text-yellow-300 absolute -top-2 left-1/2 transform -translate-x-1/2" />
           </div>
         );
       case 1:
         return (
           <div className="trophy-container">
             <div className="trophy-glow silver-glow"></div>
-            <Medal className="w-10 h-10 text-gray-300 relative z-10" />
+            <Medal className="w-8 h-8 text-gray-300 relative z-10" />
           </div>
         );
       case 2:
         return (
           <div className="trophy-container">
             <div className="trophy-glow bronze-glow"></div>
-            <Award className="w-10 h-10 text-amber-600 relative z-10" />
+            <Award className="w-8 h-8 text-amber-600 relative z-10" />
           </div>
         );
       default:
@@ -102,11 +102,11 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
   const getRankStyle = (index: number) => {
     switch (index) {
       case 0:
-        return "bg-gradient-to-br from-yellow-400/30 via-yellow-500/20 to-yellow-600/30 border-2 border-yellow-400/60 gold-trophy";
+        return "bg-gradient-to-br from-yellow-400/30 via-yellow-500/20 to-yellow-600/30 border border-yellow-400/60 gold-trophy";
       case 1:
-        return "bg-gradient-to-br from-gray-300/30 via-gray-400/20 to-gray-500/30 border-2 border-gray-300/60 silver-trophy";
+        return "bg-gradient-to-br from-gray-300/30 via-gray-400/20 to-gray-500/30 border border-gray-300/60 silver-trophy";
       case 2:
-        return "bg-gradient-to-br from-amber-600/30 via-amber-700/20 to-amber-800/30 border-2 border-amber-600/60 bronze-trophy";
+        return "bg-gradient-to-br from-amber-600/30 via-amber-700/20 to-amber-800/30 border border-amber-600/60 bronze-trophy";
       default:
         return "";
     }
@@ -114,17 +114,17 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-lg overflow-y-auto overscroll-none">
-      <div className="premium-card p-6 md:p-10 max-w-7xl w-full mx-4 relative enhanced-glow max-h-[90vh]">
+      <div className="premium-card p-4 md:p-6 max-w-5xl w-full mx-4 relative enhanced-glow max-h-[85vh]">
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 z-10"
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 z-10"
         >
-          <X className="w-7 h-7" />
+          <X className="w-6 h-6" />
         </button>
 
-        <div className="text-center mb-12 fade-in-up">
-          <div className="relative inline-block mb-6">
-            <Trophy className="w-20 h-20 text-yellow-400 mx-auto animate-bounce" />
+        <div className="text-center mb-8 fade-in-up">
+          <div className="relative inline-block mb-4">
+            <Trophy className="w-14 h-14 text-yellow-400 mx-auto animate-bounce" />
             <div className="absolute inset-0 bg-yellow-400 rounded-full opacity-30 blur-xl animate-pulse"></div>
             {[...Array(6)].map((_, i) => (
               <Star
@@ -138,28 +138,28 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
               />
             ))}
           </div>
-          <h2 className="text-5xl font-bold text-white mb-4 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent">لوحة الشرف</h2>
-          <p className="text-gray-300 text-xl">أفضل الطلاب في كل مرحلة</p>
+          <h2 className="text-3xl font-bold text-white mb-2 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text text-transparent">لوحة الشرف</h2>
+          <p className="text-gray-300 text-lg">أفضل الطلاب في كل مرحلة</p>
         </div>
 
-        <div className="overflow-y-auto max-h-[70vh] pr-2 overscroll-contain">
+        <div className="overflow-y-auto max-h-[65vh] pr-2 overscroll-contain">
           {Object.keys(topStudents).length === 0 ? (
             <div className="text-center py-16 fade-in-up">
               <Trophy className="w-20 h-20 text-gray-400 mx-auto mb-6 opacity-50" />
               <p className="text-gray-400 text-xl">لا توجد درجات مسجلة بعد</p>
             </div>
           ) : (
-            <div className="space-y-12">
+            <div className="space-y-8">
               {Object.entries(topStudents).map(([grade, students]) => (
-                <div key={grade} className="premium-card p-8 fade-in-up">
-                  <h3 className="text-3xl font-bold text-white mb-8 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">{grade}</h3>
-                  <div className="grid md:grid-cols-3 gap-8">
+                <div key={grade} className="premium-card p-5 fade-in-up">
+                  <h3 className="text-2xl font-bold text-white mb-6 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">{grade}</h3>
+                  <div className="grid md:grid-cols-3 gap-4">
                     {students.map((student, index) => (
                       <div
                         key={student.id}
-                        className={`p-8 rounded-2xl ${getRankStyle(index)} transition-all duration-500 relative overflow-hidden`}
+                        className={`p-5 rounded-2xl ${getRankStyle(index)} transition-all duration-500 relative overflow-hidden`}
                       >
-                        <div className="absolute top-4 left-4 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white font-bold">
+                        <div className="absolute top-3 left-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-xs">
                           {index + 1}
                         </div>
                         
@@ -168,15 +168,15 @@ export const HonorBoard: React.FC<HonorBoardProps> = ({ isOpen, onClose }) => {
                             {getRankIcon(index)}
                           </div>
                           
-                          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-4 border border-white/20">
-                            <h4 className="text-xl font-bold text-white">{(student as any).name}</h4>
+                          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 mb-3 border border-white/20">
+                            <h4 className="text-lg font-bold text-white">{(student as any).name}</h4>
                           </div>
                           
-                          <div className="text-3xl font-bold text-yellow-400 mb-2 animate-pulse">
+                          <div className="text-2xl font-bold text-yellow-400 mb-1 animate-pulse">
                             {(calcAveragePercent(student)).toFixed(1)}%
                           </div>
-                          <p className="text-gray-300 text-lg font-semibold">المتوسط العام</p>
-                          <div className="mt-4 text-sm text-gray-400">
+                          <p className="text-gray-300 text-base font-semibold">المتوسط العام</p>
+                          <div className="mt-2 text-sm text-gray-400">
                             {student.scores.length} اختبارات
                           </div>
                         </div>
